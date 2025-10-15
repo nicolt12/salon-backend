@@ -14,7 +14,7 @@ const crearReserva = async (req, res) => {
     const nuevaReserva = await Reserva.create({ nombre, fecha, horario, mensaje, email });
 
     await enviarCorreo({
-      to: "nikkitola12@gmail.com",
+      to: process.env.EMAIL_USER,
       subject: "📥 Nueva reserva agendada",
       text: `Nueva reserva de ${nombre} para el ${fecha} a las ${horario}.`,
     });

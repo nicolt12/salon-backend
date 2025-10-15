@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
-
+process.on("unhandledRejection", (err) => {
+  console.error("❌ Error no controlado:", err);
+  process.exit(1);
+});
 const verificarToken = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) return res.status(401).json({ error: "Token no proporcionado" });

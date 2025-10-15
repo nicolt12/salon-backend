@@ -21,9 +21,13 @@ router.post(
     body("nombre").trim().notEmpty().withMessage("El nombre es obligatorio."),
     body("email").isEmail().withMessage("Debe ser un email válido."),
     body("fecha").isISO8601().withMessage("La fecha debe tener formato válido."),
-    body("horario")
-      .matches(/^([01]\d|2[0-3]):00$/)
-      .withMessage("El horario debe ser HH:00 entre 10:00 y 20:00."),
+ body("horario").custom((value) => {
+  const hora = parseInt(value.split(":")[0]);
+  if (hora < 10 || hora > 20) {
+    throw new Error("El horario debe estar entre 10:00 y 20:00.");
+  }
+  return true;
+}),
     body("mensaje").trim().escape(),
   ],
   crearReserva
