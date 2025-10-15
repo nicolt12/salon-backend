@@ -2,7 +2,7 @@ require("dotenv").config(); // carga .env
 const mongoose = require("mongoose");
 const app = require("./app");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
