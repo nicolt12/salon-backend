@@ -4,18 +4,20 @@ const helmet = require("helmet");
 const reservasRoutes = require("./routes/reservas");
 const usuariosRoutes = require("./routes/usuarios");
 const morgan = require("morgan");
-app.use(morgan("dev"));
-const app = express();
 
-// ✅ Primero los middlewares
+const app = express(); // ✅ Primero se declara 'app'
+
+app.use(morgan("dev")); // ✅ Ahora sí se puede usar
 app.use(cors());
 app.use(helmet());
-app.use(express.json()); // 👈 Este debe ir antes de las rutas
+app.use(express.json());
+
+app.use("/api/usuarios", usuariosRoutes);
+app.use("/api/reservas", reservasRoutes);
+
+// ✅ Ruta 404 al final
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no encontrada" });
 });
-// ✅ Luego las rutas
-app.use("/api/usuarios", usuariosRoutes);
-app.use("/api/reservas", reservasRoutes);
 
 module.exports = app;
