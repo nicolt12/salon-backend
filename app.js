@@ -8,7 +8,14 @@ const morgan = require("morgan");
 const app = express(); // ✅ Primero se declara 'app'
 
 app.use(morgan("dev")); // ✅ Ahora sí se puede usar
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://salon-de-eventos.vercel.app", // tu frontend en Vercel
+    "http://localhost:5173"                // para desarrollo local con Vite
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(helmet());
 app.use(express.json());
 
